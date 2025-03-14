@@ -7,4 +7,6 @@
         - 상품과 수량정보는 리스트 형태로 작성되어야 합니다.
     - 동시 주문을 막기 위한 분산락 적용
         - 분산락의 범위 및 적용 형태는 지원자님의 판단에 따릅니다
-![image](https://github.com/user-attachments/assets/a2ca9bcd-1a2c-4df4-921c-d8ccf1d61f47)
+
+
+![image](https://github.com/user-attachments/assets/8245fdd3-23fe-4a20-bfe4-ef982514964d)
