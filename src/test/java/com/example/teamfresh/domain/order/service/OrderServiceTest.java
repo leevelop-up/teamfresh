@@ -1,9 +1,7 @@
 package com.example.teamfresh.domain.order.service;
 
 import com.example.teamfresh.TestConfig;
-import com.example.teamfresh.domain.order.dto.Order;
 import com.example.teamfresh.domain.order.dto.OrderItemParam;
-import com.example.teamfresh.domain.order.dto.OrderItems;
 import com.example.teamfresh.domain.order.dto.OrderRegisterParam;
 import com.example.teamfresh.domain.order.repository.OrderItemsJpaRepository;
 import com.example.teamfresh.domain.order.repository.OrderJpaRepository;
@@ -18,12 +16,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-import static org.assertj.core.api.FactoryBasedNavigableListAssert.assertThat;
 @Transactional
 @SpringBootTest
 class OrderServiceTest extends TestConfig {

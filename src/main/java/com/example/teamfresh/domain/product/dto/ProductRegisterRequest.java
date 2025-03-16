@@ -6,10 +6,10 @@ import lombok.Getter;
 
 @Getter
 public class ProductRegisterRequest {
-    private Long productId; // 상품 코드
-    private String name; //상품명
-    private int inventory; //재고
-    private long price; //기본 상품 금액
+    private Long productId;
+    private String name;
+    private int inventory;
+    private long price;
 
     public ProductRegisterParam toParam(){
         return ProductRegisterParam.builder()
