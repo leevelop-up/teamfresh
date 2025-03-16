@@ -14,11 +14,18 @@ import java.util.stream.Collectors;
 public class OrderRegisterParam {
 
     private Long orderId;
+    private Long marketOrderNo;
     private String customerName;
 
     private String customerAddress;
 
     private List<OrderItemParam> orderItems = new ArrayList<>();
+
+    public <E> OrderRegisterParam(Long marketOrderNo, String customerName, String customerAddress, ArrayList<E> es) {
+        this.marketOrderNo = marketOrderNo;
+        this.customerName = customerName;
+        this.customerAddress = customerAddress;
+    }
 
 
     public Order toEntity() {

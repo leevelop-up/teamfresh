@@ -6,26 +6,26 @@ import jakarta.persistence.*;
 import lombok.*;
 @Entity
 @Getter
-@Table(name = "order_items") // Order-By 예약어로 인한 오류 방지
+@Table(name = "order_items")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
 public class OrderItems extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // 주문 상세 ID
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", nullable = false)
-    private Order order; // 주문 ID
+    private Order order;
 
-    private Long productId; // 상품 ID
+    private Long productId;
 
     @Column(length = 100, nullable = false)
-    private String productName; // 상품명 (최대 100자)
+    private String productName;
 
     @Column(nullable = false)
-    private int quantity; // 주문 수량
+    private int quantity;
 
     public OrderItems(Order order, Product product, int quantity) {
         this.order = order;
