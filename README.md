@@ -34,6 +34,6 @@
  ##H2 - [http://localhost:8080/swagger-ui.htm](http://localhost:8080/h2-console) id:sa , pw : 빈값##
 ---
 ERD
-![image](https://github.com/user-attachments/assets/fb00cefc-179a-4bfd-aa64-04ed1ddc051d)
+![image](https://github.com/user-attachments/assets/d4afc895-98bc-4899-8cf3-50f335a298a6)
 
 
