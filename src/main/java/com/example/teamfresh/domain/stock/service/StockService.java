@@ -18,15 +18,7 @@ public class StockService {
 
     public void registerStock(StockRegisterParam param) {
         Stock stock = param.toEntity();
-        getStock(stock.getProductId());
         stockRepository.save(stock);
-    }
-    public Stock getStock(Long productId) {
-        Stock stock = stockRepository.findByProductId(productId);
-        if (stock == null) {
-            throw new CouponIssueException(STOCK_NOT_FOUND,"재고 정보가 없습니다.");
-        }
-        return stock;
     }
 
     public void decreaseStock(Product product, int quantity) {
