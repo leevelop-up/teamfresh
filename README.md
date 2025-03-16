@@ -2,6 +2,10 @@
 ##  설정 조건
 Profile : local
 
+엑셀 양식 : [팀프레시 엑셀파일.xlsx](https://github.com/user-attachments/files/19271172/default.xlsx)
+
+
+
 ###  **주요 기능**
 - ✅ **단건 주문 등록 API**
 - ✅ **엑셀 주문 등록 API**
