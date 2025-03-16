@@ -1,4 +1,4 @@
-package com.example.teamfresh.common;
+package com.example.teamfresh.common.config;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;

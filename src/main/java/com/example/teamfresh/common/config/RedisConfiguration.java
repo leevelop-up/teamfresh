@@ -1,4 +1,4 @@
-package com.example.teamfresh.common;
+package com.example.teamfresh.common.config;
 
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
