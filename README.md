@@ -33,7 +33,7 @@
  ##Swagger UI - http://localhost:8080/swagger-ui.html##  
  ##H2 - [http://localhost:8080/swagger-ui.htm](http://localhost:8080/h2-console) id:sa , pw : 빈값##
 ---
+ERD
+![image](https://github.com/user-attachments/assets/fb00cefc-179a-4bfd-aa64-04ed1ddc051d)
 
-주문 등록 API 예시
 
-![image](https://github.com/user-attachments/assets/8245fdd3-23fe-4a20-bfe4-ef982514964d)
