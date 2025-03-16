@@ -35,14 +35,5 @@
 ---
 
 주문 등록 API 예시
-{
-  "customerName": "홍길동",
-  "customerAddress": "서울특별시 강남구",
-  "orderItems": [
-    { "productId": 1, "quantity": 2 },
-    { "productId": 2, "quantity": 1 }
-  ]
-}
-
 
 ![image](https://github.com/user-attachments/assets/8245fdd3-23fe-4a20-bfe4-ef982514964d)
