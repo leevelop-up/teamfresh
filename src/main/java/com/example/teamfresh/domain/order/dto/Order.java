@@ -14,12 +14,11 @@ public class Order extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long orderId; // 주문 ID (고유값)
+    private Long orderId;
 
     @Column(length = 12, nullable = false)
-    private String customerName; // 주문자명 (한글 4글자 제한)
+    private String customerName;
 
     @Column(nullable = false)
-    private String customerAddress; // 주문자 주소
-
+    private String customerAddress;
 }

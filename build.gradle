@@ -30,6 +30,17 @@ dependencies {
 
     implementation 'org.apache.poi:poi-ooxml:5.2.3'
 
+    implementation 'org.redisson:redisson:3.18.0'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'it.ozimov:embedded-redis:0.7.3'
+
+    implementation 'org.slf4j:slf4j-api:1.7.36'
+    implementation 'ch.qos.logback:logback-classic'
+
+    configurations.all {
+        exclude group: 'org.slf4j', module: 'slf4j-simple'
+        exclude group: 'commons-logging', module: 'commons-logging'
+    }
 }
 
 tasks.named('test') {

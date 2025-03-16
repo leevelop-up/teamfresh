@@ -10,10 +10,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class OrderItemParam {
 
-    private Long orderId; // 주문 ID
-    private Long productId; // 상품 ID
-    private String productName; // 상품명 (최대 100자)
-    private int quantity; // 주문 수량
+    private Long orderId;
+    private Long productId;
+    private String productName;
+    private int quantity;
 
 
+    public OrderItemParam(Long productId, int quantity) {
+        this.productId = productId;
+        this.quantity = quantity;
+    }
 }

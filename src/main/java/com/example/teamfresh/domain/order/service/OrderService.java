@@ -1,5 +1,6 @@
 package com.example.teamfresh.domain.order.service;
 
+import com.example.teamfresh.common.component.DistributeLockExecutor;
 import com.example.teamfresh.domain.order.dto.Order;
 import com.example.teamfresh.domain.order.dto.OrderItemParam;
 import com.example.teamfresh.domain.order.dto.OrderItems;
@@ -25,12 +26,11 @@ public class OrderService {
     private final ProductJpaRepository productJpaRepository;
     private final StockJpaRepository stockJpaRepository;
     private final OrderItemsJpaRepository orderItemJpaRepository;
+    private final DistributeLockExecutor distributeLockExecutor;
     private final StockService stockService;
 
     @Transactional
     public void registerOrder(OrderRegisterParam param) {
-        System.out.println(param.getOrderItems());
-        // 1. 모든 상품의 재고를 먼저 체크 (부족한 상품이 발견되면 즉시 예외 발생)
         for (OrderItemParam itemParam : param.getOrderItems()) {
             Product product = productJpaRepository.findById(itemParam.getProductId())
                     .orElseThrow(() -> new RuntimeException("상품을 찾을 수 없습니다."));
@@ -40,22 +40,20 @@ public class OrderService {
             }
         }
 
-        Order order = param.toEntity();
-        orderJpaRepository.save(order);
-        List<OrderItems> orderItems = new ArrayList<>();
+        distributeLockExecutor.execute("order_lock", 10000, 10000, () -> {
+            Order order = param.toEntity();
+            orderJpaRepository.save(order);
+            List<OrderItems> orderItems = new ArrayList<>();
 
-        // 3. 주문 아이템 생성 및 재고 차감
-        for (OrderItemParam itemParam : param.getOrderItems()) {
-            Product product = productJpaRepository.findById(itemParam.getProductId()).orElseThrow();
+            for (OrderItemParam itemParam : param.getOrderItems()) {
+                Product product = productJpaRepository.findById(itemParam.getProductId()).orElseThrow();
+                stockService.decreaseStock(product, itemParam.getQuantity());
+                OrderItems orderItem = new OrderItems(order, product, itemParam.getQuantity());
+                orderItems.add(orderItem);
+            }
+            orderItemJpaRepository.saveAll(orderItems);
+        });
 
-            stockService.decreaseStock(product, itemParam.getQuantity()); // ✅ 재고 차감
 
-            // ✅ DTO → 엔티티 변환 (`OrderItemParam` → `OrderItem`)
-            OrderItems orderItem = new OrderItems(order, product, itemParam.getQuantity());
-            orderItems.add(orderItem);
-        }
-
-        // 4. 주문 상세 저장
-        orderItemJpaRepository.saveAll(orderItems);
     }
 }
