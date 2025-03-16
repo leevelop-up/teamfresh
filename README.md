@@ -23,15 +23,15 @@
 - 주문 등록과 재고 차감을 **트랜잭션 단위로 처리**하여 데이터 일관성을 유지하였습니다.
 
 ###  **외부 라이브러리 사용**
-org.springframework.boot:spring-boot-starter-web	Spring Boot 기반 REST API 개발
-org.springframework.boot:spring-boot-starter-data-jpa	JPA를 이용한 데이터베이스 관리
-com.h2database:h2	인메모리 H2 데이터베이스 사용
-org.apache.poi:poi-ooxml Excel(.xlsx) 파일 업로드 및 파싱
-org.springdoc:springdoc-openapi-starter-webmvc-ui		Swagger(OpenAPI) 기반 API 문서 자동화
-org.redisson:redisson	Redis 기반 분산 락 적용
+- org.springframework.boot:spring-boot-starter-web	Spring Boot 기반 REST API 개발
+- org.springframework.boot:spring-boot-starter-data-jpa	JPA를 이용한 데이터베이스 관리
+- com.h2database:h2	인메모리 H2 데이터베이스 사용
+- org.apache.poi:poi-ooxml Excel(.xlsx) 파일 업로드 및 파싱
+- org.springdoc:springdoc-openapi-starter-webmvc-ui		Swagger(OpenAPI) 기반 API 문서 자동화
+- org.redisson:redisson	Redis 기반 분산 락 적용
 
- **Swagger UI - http://localhost:8080/swagger-ui.html**  
- **H2 - [http://localhost:8080/swagger-ui.htm](http://localhost:8080/h2-console) id:sa , pw : 빈값**  
+ ##Swagger UI - http://localhost:8080/swagger-ui.html##  
+ ##H2 - [http://localhost:8080/swagger-ui.htm](http://localhost:8080/h2-console) id:sa , pw : 빈값##
 ---
 
 주문 등록 API 예시
