@@ -1,6 +1,7 @@
 package com.example.teamfresh.domain.order.service;
 
 import com.example.teamfresh.common.component.DistributeLockExecutor;
+import com.example.teamfresh.common.dto.exception.CouponIssueException;
 import com.example.teamfresh.domain.order.dto.Order;
 import com.example.teamfresh.domain.order.dto.OrderItemParam;
 import com.example.teamfresh.domain.order.dto.OrderItems;
@@ -19,6 +20,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.teamfresh.common.enums.ReturnCode.INSUFFICIENT_STOCK;
+import static com.example.teamfresh.common.enums.ReturnCode.PRODUCT_NOT_FOUND;
+
 @Service
 @RequiredArgsConstructor
 public class OrderService {
@@ -31,29 +35,32 @@ public class OrderService {
 
     @Transactional
     public void registerOrder(OrderRegisterParam param) {
-        for (OrderItemParam itemParam : param.getOrderItems()) {
-            Product product = productJpaRepository.findById(itemParam.getProductId())
-                    .orElseThrow(() -> new RuntimeException("상품을 찾을 수 없습니다."));
-            Integer stockQuantity = stockJpaRepository.findByProductId(product.getProductId()).getQuantity();
-            if (stockQuantity < itemParam.getQuantity()) {
-                throw new RuntimeException("재고가 부족하여 주문이 실패하였습니다. 부족한 상품: " + product.getName());
-            }
-        }
-
         distributeLockExecutor.execute("order_lock", 10000, 10000, () -> {
+            validateStock(param);
             Order order = param.toEntity();
             orderJpaRepository.save(order);
-            List<OrderItems> orderItems = new ArrayList<>();
-
-            for (OrderItemParam itemParam : param.getOrderItems()) {
-                Product product = productJpaRepository.findById(itemParam.getProductId()).orElseThrow();
-                stockService.decreaseStock(product, itemParam.getQuantity());
-                OrderItems orderItem = new OrderItems(order, product, itemParam.getQuantity());
-                orderItems.add(orderItem);
-            }
+            List<OrderItems> orderItems = createOrderItems(order, param.getOrderItems());
             orderItemJpaRepository.saveAll(orderItems);
         });
-
-
+    }
+    private void validateStock(OrderRegisterParam param) {
+        for (OrderItemParam itemParam : param.getOrderItems()) {
+            Product product = productJpaRepository.findById(itemParam.getProductId())
+                    .orElseThrow(() -> new CouponIssueException(PRODUCT_NOT_FOUND, "상품을 찾을 수 없습니다."));
+            Integer stockQuantity = stockJpaRepository.findByProductId(product.getProductId()).getQuantity();
+            if (stockQuantity < itemParam.getQuantity()) {
+                throw new CouponIssueException(INSUFFICIENT_STOCK,"재고가 부족하여 주문이 실패하였습니다. 부족한 상품: " + product.getName());
+            }
+        }
+    }
+    private List<OrderItems> createOrderItems(Order order, List<OrderItemParam> orderItemParams) {
+        List<OrderItems> orderItems = new ArrayList<>();
+        for (OrderItemParam itemParam : orderItemParams) {
+            Product product = productJpaRepository.findById(itemParam.getProductId())
+                    .orElseThrow(() -> new CouponIssueException(PRODUCT_NOT_FOUND,"상품을 찾을 수 없습니다."));
+            stockService.decreaseStock(product, itemParam.getQuantity());
+            orderItems.add(new OrderItems(order, product, itemParam.getQuantity()));
+        }
+        return orderItems;
     }
 }
